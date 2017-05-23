@@ -1,9 +1,15 @@
 package pl.training.bank.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 
+@Entity
 public class Customer implements Serializable {
 
+    @GeneratedValue
+    @Id
     private Long id;
     private String firstName;
     private String lastName;
