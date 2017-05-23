@@ -35,7 +35,7 @@ public class MySqlAccountsRepository implements AccountsRepository {
     public Account getByNumber(String sourceAccountNumber) {
         return jdbcTemplate
                 .query(SELECT_SQL, new MapSqlParameterSource("number", sourceAccountNumber), accountExtractor)
-                .orElseThrow(() -> new AccountNotFoundException());
+                .orElseThrow(AccountNotFoundException::new);
 
     }
 
