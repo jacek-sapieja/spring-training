@@ -6,7 +6,6 @@ import pl.training.bank.operation.Operation;
 import pl.training.bank.operation.TransferOperation;
 
 import javax.sql.DataSource;
-import java.util.Arrays;
 
 public class MySqlOperationHistoryRepository {
 
