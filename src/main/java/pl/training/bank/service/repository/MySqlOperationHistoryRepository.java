@@ -19,17 +19,11 @@ public class MySqlOperationHistoryRepository {
     }
 
     public void add(Operation operation) {
-        save(operation.getSubOperations().toArray(new Operation[0]));
-    }
-
-    private void save(Operation ... operations) {
-        Arrays.stream(operations).forEach(operation -> {
-            MapSqlParameterSource parameters = new MapSqlParameterSource()
-                    .addValue("number", operation.getSourceAccountNumber())
-                    .addValue("funds", operation.getFunds())
-                    .addValue("type", operation.getClass().getSimpleName());
-            jdbcTemplate.update(INSERT_OPERATION, parameters);
-        });
+        operation.getSubOperations()
+                .forEach(entry -> jdbcTemplate.update(INSERT_OPERATION, new MapSqlParameterSource()
+                .addValue("number", entry.getSourceAccountNumber())
+                .addValue("funds", entry.getFunds())
+                .addValue("type", entry.getClass().getSimpleName())));
     }
 
 }
