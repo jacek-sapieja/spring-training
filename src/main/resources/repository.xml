@@ -27,8 +27,8 @@
         </property>
     </bean>
 
-    <bean id="accountsRepository" class="pl.training.bank.service.repository.MySqlAccountsRepository">
-        <constructor-arg name="dataSource" ref="dataSource"/>
+    <bean id="accountsRepository" class="pl.training.bank.service.repository.HibernateAccountsRepository">
+        <constructor-arg name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
