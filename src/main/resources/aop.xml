@@ -7,12 +7,19 @@
 
     <bean id="operationLogger" class="pl.training.bank.operation.ConsoleOperationLogger"/>
 
+    <bean id="historyLogger" class="pl.training.bank.operation.MySqlHistoryLogger">
+        <constructor-arg name="historyRepository" ref="historyRepository"/>
+    </bean>
+
     <aop:config>
+        <aop:pointcut id="processOperation" expression="execution(void pl.training.bank.service.AccountsService.process(..)) and args(operation)"/>
         <aop:aspect ref="operationLogger">
-            <aop:pointcut id="processOperation" expression="execution(void pl.training.bank.service.AccountsService.process(..)) and args(operation)"/>
             <aop:before pointcut-ref="processOperation" method="beforeOperation"/>
             <aop:after-returning pointcut-ref="processOperation" method="onSuccess"/>
             <aop:after-throwing pointcut-ref="processOperation" method="onException" throwing="ex"/>
+        </aop:aspect>
+        <aop:aspect ref="historyLogger">
+            <aop:after-returning pointcut-ref="processOperation" method="onSuccess"/>
         </aop:aspect>
     </aop:config>
 

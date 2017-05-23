@@ -3,6 +3,8 @@ package pl.training.bank.operation;
 import pl.training.bank.service.repository.AccountsRepository;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Operation {
 
@@ -48,6 +50,12 @@ public abstract class Operation {
     }
 
     public abstract void execute();
+
+    public List<Operation> getSubOperations() {
+        List<Operation> operations = new ArrayList<>();
+        operations.add(this);
+        return operations;
+    }
 
     protected String formatCurrency(long value) {
         return NumberFormat.getCurrencyInstance().format((double) value / 100);
