@@ -3,6 +3,7 @@ package pl.training.bank.service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.training.bank.entity.Account;
 import pl.training.bank.operation.Operation;
+import pl.training.bank.service.repository.AccountNotFoundException;
 import pl.training.bank.service.repository.AccountsRepository;
 
 import java.util.ArrayList;
@@ -28,6 +29,14 @@ public class AccountsService {
     public void process(Operation operation) {
         operation.setAccountsRepository(accountsRepository);
         operation.execute();
+    }
+
+    public Account getAccount(Long id) {
+        Account account = accountsRepository.findOne(id);
+        if (account == null) {
+            throw new AccountNotFoundException();
+        }
+        return account;
     }
 
     public List<Account> getAccounts(int pageNumber, int pageSize) {
