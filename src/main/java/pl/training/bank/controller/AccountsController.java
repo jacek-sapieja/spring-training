@@ -43,9 +43,13 @@ public class AccountsController {
 
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
     public AccountDto getAccount(@PathVariable("id") Long id) {
-        //Account account = accountsService.getAccount(id);
-        //return dtoMapper.map(account, AccountDto.class);
-        throw new RuntimeException();
+        Account account = accountsService.getAccount(id);
+        return dtoMapper.map(account, AccountDto.class);
     }
+
+    /*@ExceptionHandler(AccountNotFoundException.class)
+    public ResponseEntity onAccountNotFound(AccountNotFoundException ex, Locale locale) {
+        return new ResponseEntity(dtoMapper.map(ex, locale), NOT_FOUND);
+    }*/
 
 }
