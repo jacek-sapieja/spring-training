@@ -2,7 +2,7 @@ package pl.training.bank.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-
+@XmlRootElement(name = "exception")
 public class ExceptionDto {
 
     private String description;
