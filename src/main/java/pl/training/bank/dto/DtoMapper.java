@@ -15,6 +15,10 @@ public class DtoMapper {
         this.messageSource = messageSource;
     }
 
+    public <Source, Destination> void map(Source source, Destination destination) {
+        new ModelMapper().map(source, destination);
+    }
+
     public <Source, DestinationType> DestinationType map(Source source, Class<DestinationType> type) {
         return new ModelMapper().map(source, type);
     }
