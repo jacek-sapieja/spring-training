@@ -1,9 +1,7 @@
 package pl.training.bank.config;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.Import;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.*;
 import pl.training.bank.operation.*;
 import pl.training.bank.service.AccountNumberGenerator;
 import pl.training.bank.service.AccountsService;
@@ -38,16 +36,19 @@ public class Beans {
         return new OperationResolver();
     }
 
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     @Bean
     public DepositOperation depositOperation() {
         return new DepositOperation();
     }
 
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     @Bean
     public WithdrawOperation withdrawOperation() {
         return new WithdrawOperation();
     }
 
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     @Bean
     public TransferOperation transferOperation() {
         return new TransferOperation();
