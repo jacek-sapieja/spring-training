@@ -1,10 +1,13 @@
 package pl.training.bank.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import pl.training.bank.entity.Account;
 import pl.training.bank.operation.Operation;
 import pl.training.bank.service.repository.AccountNotFoundException;
 import pl.training.bank.service.repository.AccountsRepository;
+import pl.training.bank.service.repository.ResultPage;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +42,13 @@ public class AccountsService {
         return account;
     }
 
-    public List<Account> getAccounts(int pageNumber, int pageSize) {
-        return new ArrayList<>();
+    public void deleteAccount(Long id) {
+        accountsRepository.delete(id);
+    }
+
+    public ResultPage<Account> getAccounts(int pageNumber, int pageSize) {
+        Page<Account> accountsPage = accountsRepository.findAll(new PageRequest(pageNumber, pageSize));
+        return new ResultPage<>(accountsPage.getContent(), accountsPage.getNumber(), accountsPage.getTotalPages());
     }
 
     public void init() {

@@ -1,23 +1,21 @@
 package pl.training.bank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.training.bank.common.UriBuilder;
 import pl.training.bank.dto.AccountDto;
+import pl.training.bank.dto.AccountsPageDto;
 import pl.training.bank.dto.DtoMapper;
-import pl.training.bank.dto.ExceptionDto;
 import pl.training.bank.entity.Account;
 import pl.training.bank.service.AccountsService;
-import pl.training.bank.service.repository.AccountNotFoundException;
+import pl.training.bank.service.repository.ResultPage;
 
 import java.net.URI;
-import java.util.Locale;
+import java.util.List;
 
-import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.ResponseEntity.created;
+import static org.springframework.http.ResponseEntity.noContent;
 
 @CrossOrigin
 @RequestMapping(value = "api-v1/accounts")
@@ -45,6 +43,21 @@ public class AccountsController {
     public AccountDto getAccount(@PathVariable("id") Long id) {
         Account account = accountsService.getAccount(id);
         return dtoMapper.map(account, AccountDto.class);
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
+    public ResponseEntity deleteAccount(@PathVariable("id") Long id) {
+        accountsService.deleteAccount(id);
+        return noContent().build();
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public AccountsPageDto getAccounts(
+            @RequestParam(required = false, defaultValue = "0", name = "pageNumber") int pageNumber,
+            @RequestParam(required = false, defaultValue = "10", name = "pageSize") int pageSize) {
+        ResultPage<Account> resultPage = accountsService.getAccounts(pageNumber, pageSize);
+        List<AccountDto> accountDtos = dtoMapper.map(resultPage.getContent(), AccountDto.class);
+        return new AccountsPageDto(accountDtos, resultPage.getPageNumber(), resultPage.getTotalPages());
     }
 
     /*@ExceptionHandler(AccountNotFoundException.class)
