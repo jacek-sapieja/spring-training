@@ -1,5 +1,8 @@
 package pl.training.bank.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "account")
 public class AccountDto {
 
     private String number;

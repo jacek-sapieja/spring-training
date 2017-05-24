@@ -1,5 +1,8 @@
 package pl.training.bank.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+
 public class ExceptionDto {
 
     private String description;
