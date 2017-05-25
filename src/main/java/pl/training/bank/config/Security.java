@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -30,12 +31,18 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http//.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/resources/**").permitAll()
-                .antMatchers("/**").hasRole("ADMIN")
+                .antMatchers("/resources/**")
+                    .permitAll()
+                .antMatchers("/**")
+                    .hasRole("ADMIN")
                 .and()
-                .formLogin().loginPage("/login.html").permitAll()
+                    .formLogin()
+                    .loginPage("/login.html")
+                    .permitAll()
                 .and()
-                .logout().logoutUrl("/logout.html").logoutSuccessUrl("/login.html");
+                .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout.html"))
+                    .logoutSuccessUrl("/login.html");
 //                .httpBasic();
 
     }
