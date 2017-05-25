@@ -7,6 +7,7 @@
 <body>
 <h1><s:message code="index.title"/></h1>
 <ul>
+    <li><a href="customer.html"><s:message code="register"/></a></li>
     <li><a href="create-account.html"><s:message code="index.createAccount"/></a></li>
     <li><a href="operation.html?type=deposit"><s:message code="deposit"/></a></li>
     <li><a href="operation.html?type=withdraw"><s:message code="withdraw"/></a></li>

@@ -5,8 +5,10 @@ import org.springframework.context.annotation.*;
 import pl.training.bank.operation.*;
 import pl.training.bank.service.AccountNumberGenerator;
 import pl.training.bank.service.AccountsService;
+import pl.training.bank.service.CustomersService;
 import pl.training.bank.service.JpaIncrementalAccountNumberGenerator;
 import pl.training.bank.service.repository.AccountsRepository;
+import pl.training.bank.service.repository.CustomersRepository;
 
 import javax.persistence.EntityManagerFactory;
 
@@ -24,6 +26,11 @@ public class Beans {
     @Bean(initMethod = "init", destroyMethod = "destroy")
     public AccountsService accountsService(AccountsRepository accountsRepository, AccountNumberGenerator accountNumberGenerator) {
         return new AccountsService(accountsRepository, accountNumberGenerator);
+    }
+
+    @Bean
+    public CustomersService customersService(CustomersRepository customersRepository) {
+        return new CustomersService(customersRepository);
     }
 
     @Bean
