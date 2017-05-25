@@ -1,6 +1,6 @@
 package pl.training.bank.viewmodel;
 
-public class Operation {
+public class OperationViewModel {
 
     private String sourceAccountNumber;
     private String destinationAccountNumber;

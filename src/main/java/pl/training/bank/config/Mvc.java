@@ -17,12 +17,11 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import pl.training.bank.dto.DtoMapper;
+import pl.training.bank.dto.Mapper;
 
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 @ComponentScan("pl.training.bank.controller")
 @Import(Beans.class)
@@ -58,8 +57,8 @@ public class Mvc extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public DtoMapper dtoMapper(MessageSource messageSource) {
-        return new DtoMapper(messageSource);
+    public Mapper dtoMapper() {
+        return new Mapper();
     }
 
     private Predicate<HttpMessageConverter<?>> jacksonConverters = converter -> converter instanceof AbstractJackson2HttpMessageConverter;

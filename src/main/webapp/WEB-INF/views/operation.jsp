@@ -19,9 +19,8 @@
     </c:if>
 
     <p><s:message code="operation.funds"/></p>
-    </p><sf:input path="funds"/></p>
+    <p><sf:input path="funds"/></p>
 
-    <sf:hidden path="type" value="#{param.type}"/>
     <button type="submit"><s:message code="execute"/></button>
 </sf:form>
 <a href="index.html"><s:message code="menu"/></a>

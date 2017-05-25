@@ -7,13 +7,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class DtoMapper {
-
-    private MessageSource messageSource;
-
-    public DtoMapper(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
+public class Mapper {
 
     public <Source, Destination> void map(Source source, Destination destination) {
         new ModelMapper().map(source, destination);
@@ -28,11 +22,6 @@ public class DtoMapper {
         return source.stream()
                 .map(element -> modelMapper.map(element, type))
                 .collect(Collectors.toList());
-    }
-
-    public ExceptionDto map(Exception ex, Locale locale) {
-        String description = messageSource.getMessage(ex.getClass().getSimpleName(), null, locale);
-        return new ExceptionDto(description);
     }
 
 }
