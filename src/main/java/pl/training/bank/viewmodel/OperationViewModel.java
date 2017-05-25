@@ -1,7 +1,12 @@
 package pl.training.bank.viewmodel;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
 public class OperationViewModel {
 
+    @Pattern(regexp = "\\d{26}")
+    @NotNull
     private String sourceAccountNumber;
     private String destinationAccountNumber;
     private long funds;

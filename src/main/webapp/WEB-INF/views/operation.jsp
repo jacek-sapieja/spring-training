@@ -9,17 +9,26 @@
 </head>
 <body>
 <h1><s:message code="operation.title"/>: <s:message code="${param.type}"/></h1>
-<sf:form modelAttribute="operation" method="post">
+<sf:form modelAttribute="operationViewModel" method="post">
     <p><s:message code="operation.accountNumber"/></p>
-    <p><sf:input path="sourceAccountNumber"/></p>
+    <p>
+        <sf:input path="sourceAccountNumber"/>
+        <sf:errors path="sourceAccountNumber"/>
+    </p>
 
     <c:if test="${param.type == 'transfer'}">
         <p><s:message code="operation.destinationAccountNumber"/></p>
-        <p><sf:input path="destinationAccountNumber"/></p>
+        <p>
+            <sf:input path="destinationAccountNumber"/>
+            <sf:errors path="destinationAccountNumber"/>
+        </p>
     </c:if>
 
     <p><s:message code="operation.funds"/></p>
-    <p><sf:input path="funds"/></p>
+    <p>
+        <sf:input path="funds"/>
+        <sf:errors path="funds"/>
+    </p>
 
     <button type="submit"><s:message code="execute"/></button>
 </sf:form>

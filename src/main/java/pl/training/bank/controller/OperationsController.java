@@ -2,6 +2,7 @@ package pl.training.bank.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -10,6 +11,8 @@ import pl.training.bank.operation.Operation;
 import pl.training.bank.operation.OperationResolver;
 import pl.training.bank.service.AccountsService;
 import pl.training.bank.viewmodel.OperationViewModel;
+
+import javax.validation.Valid;
 
 @RequestMapping("operation.html")
 @Controller
@@ -30,11 +33,15 @@ public class OperationsController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView showOperationForm() {
-        return new ModelAndView("operation", "operation", new OperationViewModel());
+        return new ModelAndView("operation", "operationViewModel", new OperationViewModel());
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView process(OperationViewModel operationViewModel) {
+    public ModelAndView process(@Valid OperationViewModel operationViewModel, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("operation");
+        }
+
         Operation operation = operationResolver.get(operationViewModel.getType() + OPERATION_SUFFIX);
         mapper.map(operationViewModel, operation);
         accountsService.process(operation);
