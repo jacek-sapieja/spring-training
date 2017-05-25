@@ -1,5 +1,7 @@
 package pl.training.bank.viewmodel;
 
+import pl.training.bank.validation.Funds;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
@@ -9,6 +11,7 @@ public class OperationViewModel {
     @NotNull
     private String sourceAccountNumber;
     private String destinationAccountNumber;
+    @Funds(maxValue = 5_000)
     private long funds;
     private String type;
 
