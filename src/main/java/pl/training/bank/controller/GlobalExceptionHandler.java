@@ -30,7 +30,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity onException(Exception ex, Locale locale) {
         ex.printStackTrace();
-        System.out.println("################");
         return new ResponseEntity(dtoMapper.map(ex, locale), INTERNAL_SERVER_ERROR);
     }
 
