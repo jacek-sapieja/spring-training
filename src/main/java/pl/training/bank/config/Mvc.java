@@ -24,7 +24,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 @ComponentScan("pl.training.bank.controller")
-@Import(Beans.class)
+@Import({Beans.class, Security.class})
 @EnableWebMvc
 @Configuration
 public class Mvc extends WebMvcConfigurerAdapter {
