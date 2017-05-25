@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import pl.training.bank.dto.Mapper;
+import pl.training.bank.common.Mapper;
 import pl.training.bank.operation.Operation;
 import pl.training.bank.operation.OperationResolver;
 import pl.training.bank.service.AccountsService;

@@ -1,10 +1,8 @@
-package pl.training.bank.dto;
+package pl.training.bank.common;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.context.MessageSource;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class Mapper {
