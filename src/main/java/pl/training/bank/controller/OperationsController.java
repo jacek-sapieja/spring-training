@@ -1,38 +1,18 @@
 package pl.training.bank.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import pl.training.bank.dto.DtoMapper;
-import pl.training.bank.dto.OperationDto;
-import pl.training.bank.operation.Operation;
-import pl.training.bank.operation.OperationResolver;
-import pl.training.bank.service.AccountsService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import pl.training.bank.viewmodel.Operation;
 
-import static org.springframework.http.ResponseEntity.noContent;
-
-@RequestMapping("api-v1/operations")
-@CrossOrigin
-@RestController
+@RequestMapping("operation.html")
+@Controller
 public class OperationsController {
 
-    private AccountsService accountsService;
-    private OperationResolver operationResolver;
-    private DtoMapper dtoMapper;
-
-    @Autowired
-    public OperationsController(AccountsService accountsService, OperationResolver operationResolver, DtoMapper dtoMapper) {
-        this.accountsService = accountsService;
-        this.operationResolver = operationResolver;
-        this.dtoMapper = dtoMapper;
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity process(@RequestBody OperationDto operationDto) {
-        Operation operation = operationResolver.get(operationDto.getType());
-        dtoMapper.map(operationDto, operation);
-        accountsService.process(operation);
-        return noContent().build();
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView showOperationForm() {
+        return new ModelAndView("operation", "operation", new Operation());
     }
 
 }
