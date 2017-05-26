@@ -1,28 +1,20 @@
 package pl.training.bank.entity;
 
-import org.hibernate.annotations.ManyToAny;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
+@Table(name = "customers")
 @Entity
-public class Customer implements Serializable, UserDetails {
+public class Customer implements Serializable {
 
     @GeneratedValue
     @Id
     private Long id;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
     private String email;
-    private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -56,18 +48,6 @@ public class Customer implements Serializable, UserDetails {
         this.email = email;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -97,41 +77,6 @@ public class Customer implements Serializable, UserDetails {
                 ", lastName='" + lastName + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
 }

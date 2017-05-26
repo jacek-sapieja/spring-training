@@ -3,19 +3,20 @@ package pl.training.bank.entity;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Role implements GrantedAuthority {
+public class Role implements Serializable, GrantedAuthority {
 
     @GeneratedValue
     @Id
     private Long id;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
     @ManyToMany(mappedBy = "roles")
-    private Set<Customer> customers = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -33,12 +34,17 @@ public class Role implements GrantedAuthority {
         this.name = name;
     }
 
-    public Set<Customer> getCustomers() {
-        return customers;
+    public Set<User> getUsers() {
+        return users;
     }
 
-    public void setCustomers(Set<Customer> customers) {
-        this.customers = customers;
+    public void setUsers(Set<User> users) {
+        this.users = users;
+    }
+
+    @Override
+    public String getAuthority() {
+        return name;
     }
 
     @Override
@@ -49,16 +55,12 @@ public class Role implements GrantedAuthority {
         Role role = (Role) o;
 
         return name != null ? name.equals(role.name) : role.name == null;
+
     }
 
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
-    }
-
-    @Override
-    public String getAuthority() {
-        return name;
     }
 
 }
