@@ -25,6 +25,11 @@
         <sf:input path="email"/>
         <sf:errors path="email"/>
     </p>
+    <p><s:message code="customer.password"/></p>
+    <p>
+        <sf:password path="password"/>
+        <sf:errors path="password"/>
+    </p>
     <button type="submit"><s:message code="save"/></button>
 </sf:form>
 <a href="index.html"><s:message code="menu"/></a>

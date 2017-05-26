@@ -38,7 +38,7 @@ public class CustomersController {
         }
         Customer customer = mapper.map(customerViewModel, Customer.class);
         customersService.add(customer);
-        return "index";
+        return "login";
     }
 
 }

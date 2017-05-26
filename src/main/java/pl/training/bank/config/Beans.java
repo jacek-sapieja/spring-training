@@ -2,6 +2,8 @@ package pl.training.bank.config;
 
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import pl.training.bank.operation.*;
 import pl.training.bank.service.AccountNumberGenerator;
 import pl.training.bank.service.AccountsService;
@@ -29,8 +31,13 @@ public class Beans {
     }
 
     @Bean
-    public CustomersService customersService(CustomersRepository customersRepository) {
-        return new CustomersService(customersRepository);
+    public CustomersService customersService(CustomersRepository customersRepository, PasswordEncoder passwordEncoder) {
+        return new CustomersService(customersRepository, passwordEncoder);
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new StandardPasswordEncoder();
     }
 
     @Bean
