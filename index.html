@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+saa
+<script>
+    var library = (function () {
+        'use strict';
+
+        var api = {
+                forEach: each,
+                filter: filter,
+                on: function (element, event, callback, context) {
+                    element.addEventListener(event, bind(context || element, callback));
+                },
+                onDocumentReady: function (callback) {
+                    this.on(window, 'load', callback, library);
+                },
+                evaluate: evaluate,
+                namespace: namespace,
+                mix: mix
+            },
+            baseNamespace = {};
+
+        function each(arr, callback) {
+            for (var index = 0; index < arr.length; index++) {
+                callback(arr[index], index);
+            }
+        }
+
+        function filter(arr, predicate) {
+            var result = [];
+
+            each(arr, function (element, index) {
+                if (predicate(element)) {
+                    result.push(element);
+                }
+            });
+            return result;
+        }
+
+        function namespace(path) {
+            var currentNamespace = baseNamespace;
+
+            each(path.split('.'), function (pathElement) {
+                if (currentNamespace[pathElement] === undefined) {
+                    currentNamespace[pathElement] = {};
+                }
+                currentNamespace = currentNamespace[pathElement];
+            });
+            return currentNamespace;
+        }
+
+        function evaluate(template, data) {
+            var result = template;
+
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    result = result.replace('{{' + key + '}}', data[key]);
+                }
+            }
+            return result;
+        }
+
+        function mix(source, target) {
+            for(var key in source) {
+                if (source.hasOwnProperty(key)) {
+                    target[key] = source[key];
+                }
+            }
+            return target;
+        }
+
+        function bind(context, func) {
+            return function () {
+                return func.apply(context, arguments);
+            }
+        }
+
+        api.extend = (function () {
+            var F = function () {};
+            return function (Base, Subtype) {
+                F.prototype = Base.prototype;
+                Subtype.prototype = new F();
+                Subtype.prototype.constructor = Subtype;
+                Subtype.parent = Subtype.prototype;
+            }
+        })();
+
+        if (!window.addEventListener) {
+            api.on = function (element, event, callback, context) {
+                element.attachEvent('on' + event, bind(context || element, callback));
+            };
+        }
+
+        return api;
+    })();
+    if (library == undefined) {
+        throw 'Core module not found';
+    }
+
+    (function ($) {
+        'use strict';
+
+        var ajax = $.namespace('pl.library.ajax');
+
+        function doNothing() {
+        }
+
+        function prepareSettings(config) {
+            return $.mix(config, {
+                method: 'GET',
+                url: '',
+                data: {},
+                onSuccess: doNothing,
+                onError: doNothing,
+                type: 'json'
+            });
+        }
+
+        ajax.request = function (config) {
+            var settings = prepareSettings(config),
+                xhr = new XMLHttpRequest(),
+                response = '';
+
+            xhr.open(settings.method, settings.url);
+            xhr.setRequestHeader('Authorization', 'bearer 92bf8520-f146-48d9-9a77-4b49fef07a6b')
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status > 199 && xhr.status < 300) {
+                        response = xhr.responseText;
+                        settings.onSuccess(settings.type === 'json' ? JSON.parse(response) : response, xhr);
+                    } else {
+                        settings.onError(xhr);
+                    }
+                }
+            }
+            xhr.send(settings.data);
+        };
+
+    })(library);
+
+    library.onDocumentReady(function () {
+        'use strict';
+
+        var ajax = this.namespace('pl.library.ajax');
+
+
+        ajax.request({
+            url:'http://localhost:8080/api-v1/accounts',
+            onSuccess: function (resp) {
+              console.log();
+            }
+        });
+
+
+    });
+</script>
+</body>
+</html>
