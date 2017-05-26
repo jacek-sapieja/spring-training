@@ -9,9 +9,6 @@ import pl.training.bank.service.repository.AccountNotFoundException;
 import pl.training.bank.service.repository.AccountsRepository;
 import pl.training.bank.service.repository.ResultPage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Transactional
 public class AccountsService {
 

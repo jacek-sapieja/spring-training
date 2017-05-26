@@ -7,8 +7,8 @@ public class HibernateIncrementalAccountNumberGenerator extends IncrementalAccou
     private static final String GET_LAST_ACCOUNT_NUMBER = "select max(a.number) from Account a";
 
     public HibernateIncrementalAccountNumberGenerator(SessionFactory sessionFactory) {
-        String lastAccountNumber = sessionFactory.openSession()
-                .createQuery(GET_LAST_ACCOUNT_NUMBER, String.class)
+        String lastAccountNumber = (String) sessionFactory.openSession()
+                .createQuery(GET_LAST_ACCOUNT_NUMBER)
                 .uniqueResult();
         setCounter(lastAccountNumber);
     }

@@ -28,10 +28,12 @@ public class OAuth {
 
         @Autowired
         private AuthenticationManager authenticationManagerBean;
+        @Autowired
+        private CustomersService customersService;
 
         @Override
         public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-            endpoints.authenticationManager(authenticationManagerBean);
+            endpoints.authenticationManager(authenticationManagerBean).userDetailsService(customersService);
         }
 
         @Override
