@@ -22,10 +22,9 @@ import pl.training.bank.dto.DtoMapper;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 @ComponentScan("pl.training.bank.controller")
-@Import(Beans.class)
+@Import({Beans.class, Security.class})
 @EnableWebMvc
 @Configuration
 public class Mvc extends WebMvcConfigurerAdapter {
