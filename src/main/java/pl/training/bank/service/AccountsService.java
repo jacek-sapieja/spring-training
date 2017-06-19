@@ -8,7 +8,7 @@ import pl.training.bank.service.repository.AccountsRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
+@Transactional(transactionManager = "oracleTransactionManager")
 public class AccountsService {
 
     private AccountsRepository accountsRepository;

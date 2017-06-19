@@ -1,6 +1,7 @@
 package pl.training.bank.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -11,6 +12,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import pl.training.bank.service.repository.AccountsRepository;
 import pl.training.bank.service.repository.MySqlAccountsRepository;
+import pl.training.bank.service.repository.OracleAccountsRepository;
 
 import javax.sql.DataSource;
 
@@ -23,23 +25,43 @@ public class Repository {
     private Environment environment;
 
     @Bean
-    public DataSource dataSource() {
+    public DataSource mySqlDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUsername(environment.getProperty("database.username"));
-        dataSource.setPassword(environment.getProperty("database.password"));
-        dataSource.setUrl(environment.getProperty("database.url"));
-        dataSource.setDriverClassName(environment.getProperty("database.driver"));
+        dataSource.setUsername(environment.getProperty("mysql.username"));
+        dataSource.setPassword(environment.getProperty("mysql.password"));
+        dataSource.setUrl(environment.getProperty("mysql.url"));
+        dataSource.setDriverClassName(environment.getProperty("mysql.driver"));
         return dataSource;
     }
 
     @Bean
-    public AccountsRepository accountsRepository(DataSource dataSource) {
-        return new MySqlAccountsRepository(dataSource);
+    public DataSource oracleDataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setUsername(environment.getProperty("oracle.username"));
+        dataSource.setPassword(environment.getProperty("oracle.password"));
+        dataSource.setUrl(environment.getProperty("oracle.url"));
+        dataSource.setDriverClassName(environment.getProperty("oracle.driver"));
+        return dataSource;
     }
 
     @Bean
-    public PlatformTransactionManager transactionManager(DataSource dataSource) {
+    public AccountsRepository accountsRepository(DataSource mySqlDataSource) {
+        return new MySqlAccountsRepository(mySqlDataSource);
+    }
+
+    @Bean
+    public PlatformTransactionManager transactionManager(DataSource mySqlDataSource) {
+        return new DataSourceTransactionManager(mySqlDataSource);
+    }
+
+    @Bean
+    public PlatformTransactionManager oracleTransactionManager(@Qualifier("oracleDataSource") DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean
+    public AccountsRepository oracleAccountsRepository(DataSource oracleDataSource) {
+        return new OracleAccountsRepository(oracleDataSource);
     }
 
 }
