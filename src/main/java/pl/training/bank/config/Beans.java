@@ -9,6 +9,7 @@ import pl.training.bank.service.AccountsService;
 import pl.training.bank.service.IncrementalAccountNumberGenerator;
 import pl.training.bank.service.repository.AccountsRepository;
 import pl.training.bank.service.repository.HashMapAccountsRepository;
+import pl.training.bank.util.Profiler;
 
 @EnableAspectJAutoProxy
 @Configuration
@@ -33,6 +34,11 @@ public class Beans {
     @Bean
     public ConsoleOperationLogger operationLogger() {
         return new ConsoleOperationLogger();
+    }
+
+    @Bean
+    public Profiler profiler() {
+        return new Profiler();
     }
 
 }
