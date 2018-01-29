@@ -14,7 +14,7 @@ import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
 
-@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+//@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 @Service
 public class AccountsService {
 
@@ -22,7 +22,7 @@ public class AccountsService {
     private AccountNumberGenerator accountNumberGenerator;
 
     @Autowired
-    public AccountsService(AccountsRepository accountsRepository, @Generator(name = "a") AccountNumberGenerator accountNumberGenerator) {
+    public AccountsService(AccountsRepository accountsRepository, @Generator(name = "fake") /*@Qualifier("incrementalAccountNumberGenerator")*/ AccountNumberGenerator accountNumberGenerator) {
         this.accountsRepository = accountsRepository;
         this.accountNumberGenerator = accountNumberGenerator;
     }

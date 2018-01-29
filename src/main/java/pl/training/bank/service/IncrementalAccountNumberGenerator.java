@@ -4,7 +4,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.concurrent.atomic.AtomicLong;
 
-@Generator(name = "a")
+@Generator(name = "production")
+//@Service
 public class IncrementalAccountNumberGenerator implements AccountNumberGenerator {
 
     private AtomicLong counter = new AtomicLong();

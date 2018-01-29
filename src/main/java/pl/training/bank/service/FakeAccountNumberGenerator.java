@@ -1,8 +1,10 @@
 package pl.training.bank.service;
 
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Generator(name = "b")
+@Generator(name = "fake")
+//@Service
 public class FakeAccountNumberGenerator implements AccountNumberGenerator {
 
     @Override
