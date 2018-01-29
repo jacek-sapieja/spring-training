@@ -7,12 +7,17 @@
 
     <bean id="operationLogger" class="pl.training.bank.operation.ConsoleOperationLogger"/>
 
+    <bean id="profiler" class="pl.training.bank.util.Profiler"/>
+
     <aop:config>
         <aop:aspect ref="operationLogger">
             <aop:pointcut id="processOperation" expression="execution(void pl.training.bank.service.AccountsService.process(..)) and args(operation)"/>
             <aop:before pointcut-ref="processOperation" method="beforeOperation"/>
             <aop:after-returning pointcut-ref="processOperation" method="onSuccess"/>
             <aop:after-throwing pointcut-ref="processOperation" method="onException" throwing="ex"/>
+        </aop:aspect>
+        <aop:aspect ref="profiler">
+            <aop:around method="logExecutionTime" pointcut="@annotation(pl.training.bank.util.Profile)"/>
         </aop:aspect>
     </aop:config>
 

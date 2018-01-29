@@ -3,6 +3,7 @@ package pl.training.bank.service;
 import pl.training.bank.entity.Account;
 import pl.training.bank.operation.Operation;
 import pl.training.bank.service.repository.AccountsRepository;
+import pl.training.bank.util.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ public class AccountsService {
         this.accountNumberGenerator = accountNumberGenerator;
     }
 
+    @Profile
     public Account createAccount() {
         Account account = new Account(accountNumberGenerator.getNext());
         accountsRepository.save(account);
