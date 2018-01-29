@@ -17,7 +17,7 @@ public class Profiler {
         long start = System.nanoTime();
         Object proceed = joinPoint.proceed();
         long totalTime = System.nanoTime() - start;
-        LOGGER.log(Level.INFO, joinPoint.getSignature() + " executed in " + totalTime + "n s");
+        LOGGER.log(Level.INFO, joinPoint.getSignature() + " executed in " + totalTime + " ns");
         return proceed;
     }
 
