@@ -35,15 +35,12 @@ public class AccountsService {
     }
 
     public Account getAccount(Long id) {
-        Account account = accountsRepository.findOne(id);
-        if (account == null) {
-            throw new AccountNotFoundException();
-        }
-        return account;
+        return accountsRepository.findById(id)
+                .orElseThrow(AccountNotFoundException::new);
     }
 
     public void deleteAccount(Long id) {
-        accountsRepository.delete(id);
+        accountsRepository.deleteById(id);
     }
 
     public ResultPage<Account> getAccounts(int pageNumber, int pageSize) {
