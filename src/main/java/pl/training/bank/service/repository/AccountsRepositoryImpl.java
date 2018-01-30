@@ -25,4 +25,8 @@ public class AccountsRepositoryImpl implements AccountsRepositoryCustom {
         }
     }
 
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
 }
