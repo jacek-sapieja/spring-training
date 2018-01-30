@@ -39,4 +39,7 @@ public class JpaAccountsRepository implements AccountsRepository {
         entityManager.merge(account);
     }
 
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 }
