@@ -12,10 +12,7 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.AbstractJackson2HttpMessageConverter;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import pl.training.bank.common.Mapper;
 
@@ -27,7 +24,7 @@ import java.util.function.Predicate;
 @Import(Beans.class)
 @EnableWebMvc
 @Configuration
-public class Mvc extends WebMvcConfigurerAdapter {
+public class Mvc implements WebMvcConfigurer {
 
     @Bean
     public ViewResolver viewResolver() {
