@@ -45,7 +45,7 @@ public class AccountsService {
     }
 
     public ResultPage<Account> getAccounts(int pageNumber, int pageSize) {
-        Page<Account> accountsPage = accountsRepository.findAll(new PageRequest(pageNumber, pageSize));
+        Page<Account> accountsPage = accountsRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return new ResultPage<>(accountsPage.getContent(), accountsPage.getNumber(), accountsPage.getTotalPages());
     }
 
