@@ -5,12 +5,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import pl.training.bank.entity.Account;
 import pl.training.bank.operation.Operation;
-import pl.training.bank.service.repository.AccountNotFoundException;
 import pl.training.bank.service.repository.AccountsRepository;
 import pl.training.bank.service.repository.ResultPage;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.ejb.AccessLocalException;
 
 @Transactional
 public class AccountsService {
@@ -35,19 +33,16 @@ public class AccountsService {
     }
 
     public Account getAccount(Long id) {
-        Account account = accountsRepository.findOne(id);
-        if (account == null) {
-            throw new AccountNotFoundException();
-        }
-        return account;
+        return accountsRepository.findById(id)
+                .orElseThrow(AccessLocalException::new);
     }
 
     public void deleteAccount(Long id) {
-        accountsRepository.delete(id);
+        accountsRepository.deleteById(id);
     }
 
     public ResultPage<Account> getAccounts(int pageNumber, int pageSize) {
-        Page<Account> accountsPage = accountsRepository.findAll(new PageRequest(pageNumber, pageSize));
+        Page<Account> accountsPage = accountsRepository.findAll(PageRequest.of(pageNumber, pageSize));
         return new ResultPage<>(accountsPage.getContent(), accountsPage.getNumber(), accountsPage.getTotalPages());
     }
 
