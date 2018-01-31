@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import sun.security.provider.MD5;
 
 import javax.sql.DataSource;
 
@@ -29,8 +30,10 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder)
                 .dataSource(dataSource)
                 .usersByUsernameQuery("select email, password, enabled from customer where email = ?");
-//                .inMemoryAuthentication()
-//                .withUser("maria").password("202cb962ac59075b964b07152d234b70").roles("ADMIN");
+//                auth.inMemoryAuthentication()
+//                .passwordEncoder(passwordEncoder)
+//                .withUser("maria")
+//                        .password(passwordEncoder.encode("123")).roles("ADMIN");
     }
 
     @Override
