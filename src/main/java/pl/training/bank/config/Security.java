@@ -29,7 +29,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(new StandardPasswordEncoder());
+        auth.userDetailsService(userDetailsService)
+                .passwordEncoder(new StandardPasswordEncoder());
     }
 
     @Bean
