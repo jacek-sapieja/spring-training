@@ -20,6 +20,7 @@ public class OAuth {
         public void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests().antMatchers("/api-v1/**").hasRole("ADMIN");
         }
+
     }
 
     @EnableAuthorizationServer
