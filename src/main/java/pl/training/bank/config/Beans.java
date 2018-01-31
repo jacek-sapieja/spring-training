@@ -14,8 +14,6 @@ import pl.training.bank.service.repository.AccountsRepository;
 
 import javax.persistence.EntityManagerFactory;
 
-@EnableJpaRepositories(basePackages = "pl.training.bank.service.repository")
-@EnableAspectJAutoProxy
 @Configuration
 public class Beans {
 
@@ -61,14 +59,6 @@ public class Beans {
     @Bean
     public DtoMapper dtoMapper(MessageSource messageSource) {
         return new DtoMapper(messageSource);
-    }
-
-    @Bean
-    public MessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setDefaultEncoding("UTF-8");
-        messageSource.setBasename("errors");
-        return messageSource;
     }
 
 }
